@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RFP Response Accelerator</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="layout">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Proposal Operations</p>
+        <h1>RFP Response Accelerator</h1>
+        <p class="lead">
+          Analyze long-form RFPs with OCI Grok, classify requirements, estimate fit, surface risks, and generate response drafts for proposal teams.
+        </p>
+      </div>
+      <div class="score-ring">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <circle cx="60" cy="60" r="48" class="track"></circle>
+          <circle id="scoreArc" cx="60" cy="60" r="48" class="progress"></circle>
+        </svg>
+        <div>
+          <strong id="fitScore">--%</strong>
+          <span>Oracle fit</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="workspace">
+      <aside class="left panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Input</p>
+            <h2>RFP Document</h2>
+          </div>
+          <button id="sampleBtn" class="ghost">Load Sample</button>
+        </div>
+        <label class="field">
+          Deal Type
+          <select id="dealType">
+            <option>Manufacturing Transformation</option>
+            <option>Financial Core Modernization</option>
+            <option>Public Sector Cloud Procurement</option>
+            <option>Retail AI Adoption</option>
+          </select>
+        </label>
+        <label class="field grow">
+          RFP Text
+          <textarea id="rfpText" placeholder="Paste the RFP text or requirement list here"></textarea>
+        </label>
+        <details class="settings-panel">
+          <summary>OCI Grok API Settings</summary>
+          <div class="skill-status">
+            <strong>oracle/skills Context</strong>
+            <span>Sent to Grok with each analysis</span>
+          </div>
+          <div class="settings-grid">
+            <label class="field">
+              OCI Grok API Key or Bearer Token
+              <input id="apiKey" type="password" placeholder="Paste token for your OCI Grok gateway" autocomplete="off" />
+            </label>
+            <label class="field">
+              Model
+              <input id="modelName" type="text" value="grok-4.3" />
+            </label>
+            <label class="field full">
+              OCI OpenAI-Compatible Chat Endpoint
+              <input id="apiEndpoint" type="url" value="https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/openai/v1/chat/completions" />
+            </label>
+            <label class="field full">
+              Oracle Skills Context
+              <textarea id="oracleSkillsContext" class="compact-textarea"></textarea>
+            </label>
+          </div>
+          <label class="checkbox-field">
+            <input id="rememberSettings" type="checkbox" />
+            Remember settings in this browser
+          </label>
+        </details>
+        <div class="buttons">
+          <button id="analyzeBtn" class="primary">Analyze RFP</button>
+          <button id="clearBtn" class="ghost">Clear</button>
+        </div>
+      </aside>
+
+      <section class="right">
+        <div class="metric-row">
+          <article class="metric-card">
+            <span>Requirements</span>
+            <strong id="reqCount">--</strong>
+            <small>Extracted</small>
+          </article>
+          <article class="metric-card">
+            <span>Response Readiness</span>
+            <strong id="readiness">--</strong>
+            <small>Draft coverage</small>
+          </article>
+          <article class="metric-card">
+            <span>Key Risks</span>
+            <strong id="riskCount">--</strong>
+            <small>Needs review</small>
+          </article>
+          <article class="metric-card">
+            <span>Estimated Time Saved</span>
+            <strong id="timeSaved">--</strong>
+            <small>Proposal effort</small>
+          </article>
+        </div>
+
+        <article class="panel">
+          <div class="panel-head compact">
+            <div>
+              <p class="eyebrow">Requirement intelligence</p>
+              <h2>Requirement Classification Matrix</h2>
+            </div>
+            <button id="exportBtn" class="ghost">Export Markdown</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Requirement</th>
+                  <th>Fit</th>
+                  <th>Recommended Response Stance</th>
+                </tr>
+              </thead>
+              <tbody id="matrixRows">
+                <tr><td colspan="4" class="empty">Analysis results will appear here</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <div class="split">
+          <article class="panel">
+            <div class="panel-head compact">
+              <div>
+                <p class="eyebrow">Draft response</p>
+                <h2>Response Draft</h2>
+              </div>
+              <div class="tabs">
+                <button class="tab active" data-tab="executive">Executive</button>
+                <button class="tab" data-tab="technical">Technical</button>
+                <button class="tab" data-tab="risk">Risk</button>
+              </div>
+            </div>
+            <div id="draft" class="draft">Load a sample or paste an RFP, configure OCI Grok API settings, and run the analysis.</div>
+          </article>
+
+          <article class="panel">
+            <p class="eyebrow">Win themes</p>
+            <h2>Win Themes</h2>
+            <div id="winThemes" class="theme-list">
+              <div class="empty-card">Win themes will appear after analysis</div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" aria-live="polite"></div>
+  <script src="./app.js"></script>
+</body>
+</html>
