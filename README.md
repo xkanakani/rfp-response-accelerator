@@ -32,5 +32,8 @@ http://localhost:8000
 
 Enter your API token in the settings panel before running an analysis.
 
+## Disclaimer
+
 Created as a personal project.
-The views, opinions, and code expressed in this repository are my own and do not necessarily reflect those of my employer. This project is not affiliated with, endorsed by, or officially supported by my employer.
+The views, opinions, and code expressed in this repository are my own and do not necessarily reflect those of my employer.
+This project is not affiliated with, endorsed by, or officially supported by my employer.
